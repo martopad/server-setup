@@ -1,0 +1,2 @@
+sys-kernel/installkernel **
+#sys-boot/uefi-mkconfig ~amd64

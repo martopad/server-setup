@@ -29,3 +29,8 @@ Possible routes:
 
 Improvements:
 1) put some mounting checks to make sure that mounting is safe
+
+
+Notes:
+eselect profile list | grep "default/linux/amd64/23.0 (stable)" | awk '{ print $1 }' | sed 's/[^a-zA-Z0-9]//g
+ugly but try this to automate eselect calls

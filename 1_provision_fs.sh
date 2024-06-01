@@ -33,8 +33,7 @@ EOF
 #tune2fs /dev/nvme0n1p2 -U "149eaf76-8b7f-4365-b823-e59368c09a89"
 #tune2fs /dev/nvme0n1p3 -U "e4c80995-4027-4c3a-8ddb-49a14f220f20"
 
-mkfs.vfat -F 32 /dev/nvme0n1p1
-mkfs.xfs /dev/nvme0n1p3
-mkswap /dev/nvme0n1p2
-swapon /dev/nvme0n1p2
+mkfs.vfat -F 32 "${TARGET_DISK}p1"
+mkfs.xfs "${TARGET_DISK}p3"
+mkswap "${TARGET_DISK}p2"
 
