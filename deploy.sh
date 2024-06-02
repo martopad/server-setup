@@ -25,4 +25,4 @@ mkdir --parents "${MNT_BOOT}"
 mount "${PART_BOOT}" "${MNT_BOOT}"
 ${BASE_DIR}/3_setup_system.sh "${MNT_ROOT}"
 
-umount -R "${MNT_ROOT}"
+#umount -R "${MNT_ROOT}"
