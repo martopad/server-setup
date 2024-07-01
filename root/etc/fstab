@@ -19,6 +19,6 @@
 #UUID=58e72203-57d1-4497-81ad-97655bd56494              /               xfs             defaults                0 1
 #LABEL=swap             none            swap            sw              0 0
 #/dev/cdrom             /mnt/cdrom      auto            noauto,ro       0 0
-/dev/nvme0n1p1   /efi        vfat    umask=0077     0 2
-/dev/nvme0n1p2   none         swap    sw                   0 0
-/dev/nvme0n1p3   /            xfs    defaults,noatime              0 1
+${ARGCHROOT_PART_BOOT}   /efi        vfat    umask=0077     0 2
+${ARGCHROOT_PART_SWAP}   none         swap    sw                   0 0
+${ARGCHROOT_PART_ROOT}   /            xfs    defaults,noatime              0 1

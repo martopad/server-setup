@@ -1,11 +1,9 @@
 #!/bin/bash
 
-TARGET_DISK=$1
-
 #TODO: make this configurable like some ini/yaml/toml file.
 #ISSUE: using this method, setting uuid does not work
 
-sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk --wipe-partitions always "${TARGET_DISK}"
+sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk --wipe-partitions always "${ARGPY_TARGET_DISK}"
   g # wipe and start with gpt partition table
   n
   1 # /efi 
@@ -33,7 +31,6 @@ EOF
 #tune2fs /dev/nvme0n1p2 -U "149eaf76-8b7f-4365-b823-e59368c09a89"
 #tune2fs /dev/nvme0n1p3 -U "e4c80995-4027-4c3a-8ddb-49a14f220f20"
 
-mkfs.vfat -F 32 "${TARGET_DISK}p1"
-mkfs.xfs "${TARGET_DISK}p3"
-mkswap "${TARGET_DISK}p2"
-
+mkfs.vfat -F 32 "${ARGPY_PART_BOOT}"
+mkfs.xfs "${ARGPY_PART_ROOT}"
+mkswap "${ARGPY_PART_SWP}"

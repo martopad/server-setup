@@ -32,5 +32,10 @@ Possible routes:
 1) Using a fixed stage3 and version controlled portage repo (/var/db/repos/gentoo)
 2) Creating a stage 4 image (will likely need a bigger bootstrap drive)
 
+TODO:
+1) hardcorded shits (/etc/fstab, mount points /dev/nvme vs /dev/sda)
+2) Hard coded to have 3 partitions for /efi, root, and swap.
+3) Kernel version is automatically selected. Maybe improve this when we decide root build kernel from source.
+
 
 

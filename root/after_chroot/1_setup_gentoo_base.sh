@@ -1,9 +1,5 @@
 #!/bin/bash
-
-ARG_ARCH=$1
-ARG_POSTFIX=$2
-ARG_PROFILE_NUM=$3
-ARG_BINHOST_MIRROR=$4
+set -e
 
 get_eselect_number_from_list() {
     what_to_list=$1
@@ -13,12 +9,12 @@ get_eselect_number_from_list() {
 
 # Commented for documentation. It is better to handle mounting to parent call
 # mkdir /efi
-# mount "${ARG_PART_EFI}" /efi
+# mount "${ARGCHROOT_PART_EFI}" /efi
 
 emerge-webrsync
 emerge --sync --quiet
 
-profile_name="default/linux/${ARG_ARCH}/${ARG_PROFILE_NUM} (stable)"
+profile_name="default/linux/${ARGCHROOT_ARCH}/${ARGCHROOT_PROFILE_NUM} (stable)"
 echo "Getting profile number for: ${profile_name}"
 eselect_num=$(get_eselect_number_from_list "profile" "${profile_name}")
 echo "Setting profile number to: ${eselect_num}"
@@ -30,9 +26,9 @@ eselect profile set "${eselect_num}"
 cat <<EOT > /etc/portage/binrepos.conf/gentoobinhost.conf 
 [binhost]
 priority = 9999
-sync-uri = https://${ARG_BINHOST_MIRROR}/releases/${ARG_ARCH}/binpackages/${ARG_PROFILE_NUM}/${ARG_POSTFIX}/
+sync-uri = https://${ARGCHROOT_BINHOST_MIRROR}/releases/${ARGCHROOT_ARCH}/binpackages/${ARGCHROOT_PROFILE_NUM}/${ARGCHROOT_ARCH_POSTFIX}/
 EOT
-#sed "s|distfiles.gentoo.org|${ARG_BINHOST_MIRROR}|g" /etc/portage/binrepos.conf/gentoobinhost.conf
+#sed "s|distfiles.gentoo.org|${ARGCHROOT_BINHOST_MIRROR}|g" /etc/portage/binrepos.conf/gentoobinhost.conf
 getuto
 
 emerge --oneshot --getbinpkg app-portage/cpuid2cpuflags

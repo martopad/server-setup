@@ -1,14 +1,10 @@
 #!/bin/bash
+set -e
 
-SCRIPT_DIR=$(realpath "$0")
-BASE_DIR=$(dirname "$SCRIPT_DIR")
+rsync -a "${ARGPY_BASE_DIR}/root/"  "${ARGPY_MNT_ROOT}/"
 
-ARG_MNT_ROOT=$1
-
-rsync -a "${BASE_DIR}/root/"  "${ARG_MNT_ROOT}/"
-
-arch-chroot "${ARG_MNT_ROOT}" << EOF
+arch-chroot "${ARGPY_MNT_ROOT}" << EOF
 /after_chroot/setup_all.sh
 EOF
 
-chown -R root:root "${ARG_MNT_ROOT}"
+chown -R root:root "${ARGPY_MNT_ROOT}"

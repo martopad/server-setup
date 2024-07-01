@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 emerge --verbose --getbinpkg \
     app-admin/sysklogd \

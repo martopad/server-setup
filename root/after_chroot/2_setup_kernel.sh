@@ -1,8 +1,5 @@
 #!/bin/bash
-
-ARG_BOOT_DEV="/dev/nvme0n1"
-ARG_BOOT_PART="1"
-ARG_ROOT_PART="/dev/nvme0n1p3"
+set -e
 
 ESP="/efi"
 EFI="EFI/Gentoo"
@@ -12,7 +9,7 @@ mkdir -p /etc/dracut.conf.d
 
 cat <<EOT > /etc/dracut.conf.d/conf.conf
 uefi="yes"
-kernel_cmdline="root=${ARG_ROOT_PART}"
+kernel_cmdline="root=${ARGCHROOT_PART_ROOT}"
 EOT
 
 emerge --getbinpkg \
@@ -23,22 +20,22 @@ emerge --getbinpkg \
     sys-boot/efibootmgr
 
 # UEFI COMPLIANT SYSTEMS ==============
-ARG_KERNEL_VER=$(ls -l /usr/src/linux | awk '{ printf $11 }' | sed 's/linux-//')
-cp "/usr/src/linux-${ARG_KERNEL_VER}/arch/x86/boot/uki.efi" "${ESP}/${EFI}/${ARG_KERNEL_VER}-uki.efi"
+KERNEL_VER=$(ls -l /usr/src/linux | awk '{ printf $11 }' | sed 's/linux-//')
+cp "/usr/src/linux-${KERNEL_VER}/arch/x86/boot/uki.efi" "${ESP}/${EFI}/${KERNEL_VER}-uki.efi"
 
 # When code was not using UKI
-#cp "/boot/System.map-${ARG_KERNEL_VER}" "${ESP}/${EFI}"
-#cp "/boot/config-${ARG_KERNEL_VER}" "${ESP}/${EFI}"
-#cp "/boot/initramfs-${ARG_KERNEL_VER}.img" "${ESP}/${EFI}"
-#cp "/boot/vmlinuz-${ARG_KERNEL_VER}" "${ESP}/${EFI}/vmlinuz-${ARG_KERNEL_VER}.efi"
+#cp "/boot/System.map-${KERNEL_VER}" "${ESP}/${EFI}"
+#cp "/boot/config-${KERNEL_VER}" "${ESP}/${EFI}"
+#cp "/boot/initramfs-${KERNEL_VER}.img" "${ESP}/${EFI}"
+#cp "/boot/vmlinuz-${KERNEL_VER}" "${ESP}/${EFI}/vmlinuz-${KERNEL_VER}.efi"
 
 efibootmgr -B -b 0050 || echo "Boot0050 does not exist. It's okay"
 
 efibootmgr --create \
     --bootnum "0050" \
-    --disk "${ARG_BOOT_DEV}" --part ${ARG_BOOT_PART} \
+    --disk "${ARGCHROOT_DEV_BOOT}" --part ${ARGCHROOT_PART_BOOT_NUMONLY} \
     --label "Gentoo" \
-    --loader "${EFI}/${ARG_KERNEL_VER}-uki.efi"
+    --loader "${EFI}/${KERNEL_VER}-uki.efi"
 
 
 
@@ -51,6 +48,6 @@ efibootmgr --create \
 
 EFI_MINISFORUM="EFI/Boot"
 mkdir -p "${ESP}/${EFI_MINISFORUM}"
-cp "/usr/src/linux-${ARG_KERNEL_VER}/arch/x86/boot/uki.efi" "${ESP}/${EFI_MINISFORUM}/bootx64.efi"
+cp "/usr/src/linux-${KERNEL_VER}/arch/x86/boot/uki.efi" "${ESP}/${EFI_MINISFORUM}/bootx64.efi"
 
 
