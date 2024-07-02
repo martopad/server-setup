@@ -1,9 +1,8 @@
 #!/bin/bash
-
+set -ex
 #TODO: make this configurable like some ini/yaml/toml file.
 #ISSUE: using this method, setting uuid does not work
-
-sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk --wipe-partitions always "${ARGPY_TARGET_DISK}"
+sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk --wipe-partitions always "${ARGPY_DRIVE_TARGET}"
   g # wipe and start with gpt partition table
   n
   1 # /efi 

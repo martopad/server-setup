@@ -36,6 +36,12 @@ TODO:
 1) hardcorded shits (/etc/fstab, mount points /dev/nvme vs /dev/sda)
 2) Hard coded to have 3 partitions for /efi, root, and swap.
 3) Kernel version is automatically selected. Maybe improve this when we decide root build kernel from source.
+4) Create a profiles flag so different profiles can be documented
+5) Support possible profile scripts so that different types of devices can be automatically provisioned
+   - Types of machines so far: personal, rpi3b+, rpi5, un100d, another personal machine.
+   - Support for possible chrooting on another machine so provisioning is easier
+      - this will mean creating a post-provisioning script that will be run on first startup.
+6) cleanup is missing.
 
 
 

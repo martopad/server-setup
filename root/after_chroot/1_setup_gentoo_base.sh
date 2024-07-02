@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 
 get_eselect_number_from_list() {
     what_to_list=$1
@@ -11,7 +11,7 @@ get_eselect_number_from_list() {
 # mkdir /efi
 # mount "${ARGCHROOT_PART_EFI}" /efi
 
-emerge-webrsync
+#emerge-webrsync
 emerge --sync --quiet
 
 profile_name="default/linux/${ARGCHROOT_ARCH}/${ARGCHROOT_PROFILE_NUM} (stable)"
@@ -31,10 +31,13 @@ EOT
 #sed "s|distfiles.gentoo.org|${ARGCHROOT_BINHOST_MIRROR}|g" /etc/portage/binrepos.conf/gentoobinhost.conf
 getuto
 
-emerge --oneshot --getbinpkg app-portage/cpuid2cpuflags
-echo "*/* $(cpuid2cpuflags)" > /etc/portage/package.use/00cpu-flags
+# This should be moved to a "when actual machine boots up"
+# This cant be executed when chrooted because there is a chance that a different machine
+# with different CPU can setup this storage device.
+# emerge --oneshot --getbinpkg app-portage/cpuid2cpuflags
+# echo "*/* $(cpuid2cpuflags)" > /etc/portage/package.use/00cpu-flags
 
-emerge --verbose --getbinpkg dev-vcs/git
+emerge --verbose --getbinpkg dev-vcs/git app-eselect/eselect-repository
 eselect repository disable gentoo
 eselect repository enable gentoo
 rm -r /var/db/repos/gentoo
