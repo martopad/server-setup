@@ -64,9 +64,10 @@ def extract_number_from_file(file: pathlib.Path) -> int:
     splitted = filename.split("_")
     return int(splitted[0])
  
-pre_chroot_scripts = pathlib.Path(f"{user_conf['ARGPY']['ARGPY_DIRS_SCRIPTS']}/pre_chroot")
-to_chroot_scripts = pathlib.Path(f"{user_conf['ARGPY']['ARGPY_DIRS_SCRIPTS']}/to_chroot")
+pre_chroot_scripts = pathlib.Path(f"{user_conf['ARGPY']['ARGPY_DIRS_FILES']}/pre_chroot")
+to_chroot_scripts = pathlib.Path(f"{user_conf['ARGPY']['ARGPY_DIRS_FILES']}/to_chroot")
 
+# TODO setting up in live cd vs live system
 if int(user_conf['CONTROL']['DO_1']):
     run_cmd([f"{pre_chroot_scripts}/1_provision_fs.sh"])
 
@@ -81,7 +82,7 @@ if int(user_conf['CONTROL']['DO_3']):
     run_cmd(["mkdir", "--parents", user_conf['ARGPY']['ARGPY_MNT_BOOT']])
     run_cmd(["mount", user_conf['ARGPY']['ARGPY_PART_BOOT'], user_conf['ARGPY']['ARGPY_MNT_BOOT']])
     #arch-chroot behavior, wrapping it in python doesnt inherit shell env
-    run_cmd(["rsync", "-a", f"{user_conf['ARGPY']['ARGPY_DIRS_SCRIPTS']}/root/", user_conf['ARGPY']['ARGPY_MNT_ROOT']])
+    run_cmd(["rsync", "-a", f"{user_conf['ARGPY']['ARGPY_DIRS_FILES']}/root/", user_conf['ARGPY']['ARGPY_MNT_ROOT']])
     run_cmd(["chown", "-R", "root:root", user_conf['ARGPY']['ARGPY_MNT_ROOT']])
     listified = list(to_chroot_scripts.iterdir())
     listified.sort(key=extract_number_from_file)

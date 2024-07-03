@@ -3,8 +3,8 @@
 Design/Interface:
 The provisioning process is divided into three phases:
     1) pre-chroot (2 hardcoded scripts that is executed in order)
-        - disk and filsystem preparation
-        - installation of base system (unzipping stage3)
+        - disk and filsystem preparation (1_provision_fs.sh)
+        - installation of base system (unzipping stage3) (2_install_system.sh)
     2) during chroot (executes an arbitraty amount of scripts arranged by the number indicated in filename)
         -  Running all of Gentoo-specific things (portage prep, timezone, profile setting)
 
