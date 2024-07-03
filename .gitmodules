@@ -1,0 +1,3 @@
+[submodule "src/arm64/rpi/rpi5/firmware-nonfree"]
+	path = src/arm64/rpi/rpi5/firmware-nonfree
+	url = https://github.com/RPi-Distro/firmware-nonfree.git
