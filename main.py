@@ -72,18 +72,19 @@ if int(user_conf['CONTROL']['DO_1']):
     run_cmd([f"{pre_chroot_scripts}/1_provision_fs.sh"])
 
 if int(user_conf['CONTROL']['DO_2']):
-    run_cmd(["swapon", user_conf['ARGPY']['ARGPY_PART_SWP']]) #TODO: stateful action across runs
+    #run_cmd(["swapon", user_conf['ARGPY']['ARGPY_PART_SWP']]) #TODO: stateful action across runs.
     #maybe somesort of "persistent/stateful flag" so that the script is aware with these actions
     run_cmd(["mkdir", "--parents", user_conf['ARGPY']['ARGPY_MNT_ROOT']])
     run_cmd(["mount", user_conf['ARGPY']['ARGPY_PART_ROOT'], user_conf['ARGPY']['ARGPY_MNT_ROOT']])
-    run_cmd([f"{pre_chroot_scripts}/2_install_system.sh"])
-
-if int(user_conf['CONTROL']['DO_3']):
     run_cmd(["mkdir", "--parents", user_conf['ARGPY']['ARGPY_MNT_BOOT']])
     run_cmd(["mount", user_conf['ARGPY']['ARGPY_PART_BOOT'], user_conf['ARGPY']['ARGPY_MNT_BOOT']])
+    run_cmd([f"{pre_chroot_scripts}/2_install_system.sh"])
     #arch-chroot behavior, wrapping it in python doesnt inherit shell env
-    run_cmd(["rsync", "-a", f"{user_conf['ARGPY']['ARGPY_DIRS_FILES']}/root/", user_conf['ARGPY']['ARGPY_MNT_ROOT']])
-    run_cmd(["chown", "-R", "root:root", user_conf['ARGPY']['ARGPY_MNT_ROOT']])
+    run_cmd([f"{pre_chroot_scripts}/3_install_custom_files.sh"]) 
+    #run_cmd(["rsync", "-a", f"{user_conf['ARGPY']['ARGPY_DIRS_FILES']}/root/", user_conf['ARGPY']['ARGPY_MNT_ROOT']])
+    #run_cmd(["chown", "-R", "root:root", user_conf['ARGPY']['ARGPY_MNT_ROOT']])
+
+if int(user_conf['CONTROL']['DO_3']):
     listified = list(to_chroot_scripts.iterdir())
     listified.sort(key=extract_number_from_file)
     for script in listified:

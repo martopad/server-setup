@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ex
 
-git -C "${ARGPY_DIRS_FILES}" submodule update --init --recursive
+#git -C "${ARGPY_DIRS_FILES}" submodule update --init --recursive
 
 #wget -c -P "${BASE_DIR}/root/var/cache/distfiles/" "http://distfiles.gentoo.org/distfiles/b4/NetworkManager-1.46.0.tar.xz"
 # Scriptified mechanism to fetch stage3 acquired from:
@@ -10,7 +10,7 @@ BASE_URL="https://ftp.agdsn.de/gentoo/releases/arm64/autobuilds/"
 TXT_FILE="latest-stage3-${ARGCHROOT_ARCH}-${ARGCHROOT_INIT_SYS}.txt"
 FULL_URL="${BASE_URL}/${TXT_FILE}"
 wget -c -P "${ARGPY_MNT_ROOT}" "${FULL_URL}"
-STAGE3_PATH="$(sed -n '6p' "${TXT_FILE}" | cut -f 1 -d ' ')"
+STAGE3_PATH="$(sed -n '6p' "${ARGPY_MNT_ROOT}/${TXT_FILE}" | cut -f 1 -d ' ')"
 wget -c -P "${ARGPY_MNT_ROOT}" "${BASE_URL}/${STAGE3_PATH}"
 
 #mount "${ARGPY_PART_ROOT}" "${ARGPY_MNT_ROOT}"
@@ -18,11 +18,7 @@ pushd "${ARGPY_MNT_ROOT}"
 tar xpf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner -C ${ARGPY_MNT_ROOT}
 
 #mount "${ARGPY_PART_BOOT}" "${ARGPY_MNT_BOOT}"
-rsync -r "${ARGPY_DIRS_FILES}/firmware/boot/" "${ARGPY_MNT_BOOT}/"
-rsync -r "${ARGPY_DIRS_FILES}/firmware/modules" "${ARGPY_MNT_ROOT}/lib/"
-
-rsync -r "${ARGPY_DIRS_FILES}/root/" "${ARGPY_MNT_ROOT}/"
-sed -ie 's/f0:12345/#0f:12345/' "${ARGPY_MNT_ROOT}/etc/inittab"
+rsync -a "${ARGPY_DIRS_FILES}/firmware/modules" "${ARGPY_MNT_ROOT}/lib/"
 
 #Wifi
 #wget -P "${ARGPY_MNT_ROOT}/lib/firmware/brcm" \
@@ -40,9 +36,14 @@ rsync -a "${ARGPY_DIRS_FILES}/firmware-nonfree/debian/config/brcm80211/cypress" 
 # Maybe its better to do this via wired connection in the future.
 #wget -P "${ARGPY_MNT_ROOT}/var/cache/distfiles/" "http://distfiles.gentoo.org/distfiles/b4/NetworkManager-1.46.0.tar.xz"
 
+# arrangement is important because chmodding files in /boot does not work.
+rsync -r "${ARGPY_DIRS_FILES}/root/" "${ARGPY_MNT_ROOT}/"
+chown -R root:root "${ARGPY_MNT_ROOT}/"
 
-echo "Done, congratulations! Syncing first"
-sync -a
+rsync -r "${ARGPY_DIRS_FILES}/firmware/boot/" "${ARGPY_MNT_BOOT}/"
+
+echo "Syncing 2_install_system.sh"
+sync
 #echo "Syncing and unmounting: ${ARGPY_MNT_BOOT}"
 #umount "${ARGPY_MNT_BOOT}"
 #echo "Done"
