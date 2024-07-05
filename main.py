@@ -90,11 +90,11 @@ if int(user_conf['CONTROL']['DO_3']):
     listified = list(to_chroot_scripts.iterdir()) + list(to_chroot_common_scripts.iterdir())
     listified.sort(key=extract_number_from_file)
     for script in listified:
-        #run_bash_script_chrooted(script.name, script.parent)
-        print(script.name)
-        print(script.parent)
+        run_bash_script_chrooted(script.name, script.parent)
+        #print(script.name)
+        #print(script.parent)
 #TODO missing fstab configuration for additional storage
 if int(user_conf['CONTROL']['DO_4']):
-    run_cmd(["swapoff", user_conf['ARGPY']['ARGPY_PART_SWP']]) #TODO: stateful action across runs
+    #run_cmd(["swapoff", user_conf['ARGPY']['ARGPY_PART_SWP']]) #TODO: stateful action across runs
     run_cmd(["umount", "-R", user_conf['ARGPY']['ARGPY_MNT_ROOT']])
 

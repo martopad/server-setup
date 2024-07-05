@@ -33,6 +33,9 @@ getuto
 emerge --oneshot --getbinpkg app-portage/cpuid2cpuflags
 echo "*/* $(cpuid2cpuflags)" > /etc/portage/package.use/00cpu-flags
 
+echo "Europe/Warsaw" > /etc/timezone
+emerge --config sys-libs/timezone-data
+
 emerge --verbose --getbinpkg dev-vcs/git app-eselect/eselect-repository
 eselect repository disable gentoo
 eselect repository enable gentoo
@@ -42,12 +45,4 @@ emerge --sync --quiet
 emerge --update --deep --newuse --getbinpkg @world
 emerge --depclean
 
-echo "Europe/Warsaw" > /etc/timezone
-emerge --config sys-libs/timezone-data
-
-echo "en_US ISO-8859-1" > /etc/locale.gen
-echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
-locale-gen
-
-eselect locale set $(get_eselect_number_from_list "locale" "en_US.utf8")
 

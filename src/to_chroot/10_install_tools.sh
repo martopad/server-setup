@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 
 emerge --verbose --getbinpkg \
     app-admin/sysklogd \
@@ -8,6 +8,7 @@ emerge --verbose --getbinpkg \
     net-misc/chrony \
     sys-fs/xfsprogs \
     sys-fs/dosfstools \
+    sys-apps/arch-chroot \
     app-editors/neovim
 
 sed -i 's|#s0:12345:|s0:12345:|g' /etc/inittab

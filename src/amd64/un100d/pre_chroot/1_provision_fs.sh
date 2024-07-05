@@ -33,3 +33,4 @@ EOF
 mkfs.vfat -F 32 "${ARGPY_PART_BOOT}"
 mkfs.xfs "${ARGPY_PART_ROOT}"
 mkswap "${ARGPY_PART_SWP}"
+
