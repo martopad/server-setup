@@ -20,6 +20,12 @@ eselect_num=$(get_eselect_number_from_list "profile" "${profile_name}")
 echo "Setting profile number to: ${eselect_num}"
 eselect profile set "${eselect_num}"
 
+#echo "en_US ISO-8859-1" > /etc/locale.gen
+#echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+#locale-gen
+
+#select locale set $(get_eselect_number_from_list "locale" "en_US.utf8")
+
 cat <<EOT > /etc/portage/binrepos.conf/gentoobinhost.conf 
 [binhost]
 priority = 9999

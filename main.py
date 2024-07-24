@@ -73,7 +73,7 @@ if int(user_conf['CONTROL']['DO_1']):
     run_cmd([f"{pre_chroot_scripts}/1_provision_fs.sh"])
 
 if int(user_conf['CONTROL']['DO_2']):
-    #run_cmd(["swapon", user_conf['ARGPY']['ARGPY_PART_SWP']]) #TODO: stateful action across runs.
+    run_cmd(["swapon", user_conf['ARGPY']['ARGPY_PART_SWP']]) #TODO: stateful action across runs.
     #maybe somesort of "persistent/stateful flag" so that the script is aware with these actions
     run_cmd(["mkdir", "--parents", user_conf['ARGPY']['ARGPY_MNT_ROOT']])
     run_cmd(["mount", user_conf['ARGPY']['ARGPY_PART_ROOT'], user_conf['ARGPY']['ARGPY_MNT_ROOT']])
@@ -95,6 +95,6 @@ if int(user_conf['CONTROL']['DO_3']):
         #print(script.parent)
 #TODO missing fstab configuration for additional storage
 if int(user_conf['CONTROL']['DO_4']):
-    #run_cmd(["swapoff", user_conf['ARGPY']['ARGPY_PART_SWP']]) #TODO: stateful action across runs
+    run_cmd(["swapoff", user_conf['ARGPY']['ARGPY_PART_SWP']]) #TODO: stateful action across runs
     run_cmd(["umount", "-R", user_conf['ARGPY']['ARGPY_MNT_ROOT']])
 

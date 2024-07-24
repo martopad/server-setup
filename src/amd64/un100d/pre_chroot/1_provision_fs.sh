@@ -7,7 +7,7 @@ sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk --wipe-partitions always "
   n
   1 # /efi 
     # default start
-  +1G
+  +5G
   t # marking partition
   1 # mark as efi, partition 1 automatically selected
   n
@@ -31,6 +31,6 @@ EOF
 #tune2fs /dev/nvme0n1p3 -U "e4c80995-4027-4c3a-8ddb-49a14f220f20"
 
 mkfs.vfat -F 32 "${ARGPY_PART_BOOT}"
-mkfs.xfs "${ARGPY_PART_ROOT}"
+mkfs.ext4 "${ARGPY_PART_ROOT}"
 mkswap "${ARGPY_PART_SWP}"
 

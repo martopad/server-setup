@@ -16,5 +16,7 @@ STAGE3_FILE="$(sed -n '6p' "${ARGPY_MNT_ROOT}/${TXT_FILE}" | cut -f 1 -d ' ')"
 echo "Fetching Stage3: ${BASE_URL}/${STAGE3_FILE}"
 wget -c -P "${ARGPY_MNT_ROOT}" "${BASE_URL}/${STAGE3_FILE}"
 tar xpf ${ARGPY_MNT_ROOT}/stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner -C "${ARGPY_MNT_ROOT}"
+rsync -a "${ARGPY_DIRS_FILES}/root/" "${ARGPY_MNT_ROOT}"
+chown -R root:root "${ARGPY_MNT_ROOT}"
 cp --dereference /etc/resolv.conf "${ARGPY_MNT_ROOT}/etc/"
 
