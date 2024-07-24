@@ -20,6 +20,6 @@
 #LABEL=swap		none		swap		sw		0 0
 #/dev/cdrom		/mnt/cdrom	auto		noauto,ro	0 0
 
-${ARGCHROOT_PART_BOOT}         /boot           vfat            noatime,noauto,nodev,nosuid,noexec	1 2
-${ARGCHROOT_PART_SWAP}         swap            swap            defaults                                0 0
+${ARGCHROOT_PART_BOOT}         /boot           vfat            defaults,noatime				1 2
+${ARGCHROOT_PART_SWAP}         none            swap            sw                                0 0
 ${ARGCHROOT_PART_ROOT}         /               ext4            noatime                                 0 0

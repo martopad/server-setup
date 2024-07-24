@@ -1,0 +1,19 @@
+#=sys-kernel/raspberrypi-image-6.6.31_p20240529
+#=sys-kernel/raspberrypi-sources-6.6.31_p20240529
+#<=sys-kernel/raspberrypi-image-6.1.21_p20230405
+#<=sys-kernel/raspberrypi-sources-6.1.21_p20230405
+# mask all previous versions
+=sys-kernel/raspberrypi-sources-6.1.21_p20230405
+=sys-kernel/raspberrypi-sources-5.15.84_p20230106
+=sys-kernel/raspberrypi-sources-5.15.76_p20221104
+
+=sys-kernel/raspberrypi-image-6.6.28_p20240424
+=sys-kernel/raspberrypi-image-6.1.21_p20230405
+=sys-kernel/raspberrypi-image-5.15.32_p20220331
+=sys-kernel/raspberrypi-image-5.10.63_p20211029
+=sys-kernel/raspberrypi-image-5.10.17_p20210527
+=sys-kernel/raspberrypi-image-5.10.11_p20210201
+=sys-kernel/raspberrypi-image-5.4.79_p20201201
+=sys-kernel/raspberrypi-image-4.19.75_p20190925
+=sys-kernel/raspberrypi-image-4.14.98_p20190215
+
